@@ -22,3 +22,9 @@ python manage.py runserver
 - `settings.py`: armazena as configurações do projeto, diz ao Django como ele deve se comportar.
 - `urls.py`: carrega as configurações de URL de cada aplicação.
 - `asgi.py` e `wsgi.py`: são usados em produção, para fazer a ligação entre o Django e um servidor web externo.
+
+### `urls.py`
+
+Esse arquivo contém as URLs do projeto. Cada aplicação tem suas URLs.
+
+A variável `urlpatterns` é uma lista que contém as URLs. Ela recebe instâncias da função `path()`, a qual recebe o caminho da URL e uma `view`, que por sua vez recebe uma requisição HTTP.
