@@ -2,6 +2,4 @@ from django.shortcuts import render
 
 
 def home(request):
-    return render(request, 'recipes/home.html', {
-        'name': 'Sérgio Dantas',
-    })
+    return render(request, 'recipes/pages/home.html')
