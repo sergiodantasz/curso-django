@@ -19,5 +19,6 @@ def recipe(request, id):
         'recipes/pages/recipe.html',
         {
             'recipe': make_recipe(),
+            'is_detail_page': True,
         }
     )
