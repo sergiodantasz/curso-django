@@ -282,3 +282,17 @@ h6 {
   margin: 2rem;
   padding: 0 2rem;
 }
+
+.center {
+  text-align: center;
+}
+
+.margin-x {
+  margin-top: var(--spacing-gutter-medium);
+  margin-bottom: var(--spacing-gutter-medium);
+}
+
+.margin-y {
+  margin-right: var(--spacing-gutter-medium);
+  margin-left: var(--spacing-gutter-medium);
+}
