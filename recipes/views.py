@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.shortcuts import get_list_or_404, get_object_or_404, render
 
 from . import models
@@ -40,4 +41,14 @@ def category(request, category_id):
             'recipes': recipes,
             'title': f'{recipes[0].category.name} | Category'
         }
+    )
+
+
+def search(request):
+    search_term = request.GET.get('q')
+    if not search_term:
+        raise Http404()
+    return render(
+        request,
+        'recipes/pages/search.html'
     )

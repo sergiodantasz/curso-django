@@ -23,7 +23,7 @@ class RecipeRecipeModelTest(RecipeTestBase):
             ),
             title='Recipe Title',
             description='Recipe Description',
-            slug='recipe-slug',
+            slug='recipe-slug-without-defaults',
             preparation_time=10,
             preparation_time_unit='minutes',
             servings=5,
