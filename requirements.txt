@@ -5,3 +5,4 @@ pytest>=7.4.3,<7.5
 pytest-django>=4.7.0,<4.8
 parameterized>=0.9.0,<1.0
 coverage>=7.3.2,<7.4
+python-dotenv>=1.0.0,<1.1
