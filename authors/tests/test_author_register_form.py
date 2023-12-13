@@ -23,7 +23,7 @@ class AuthorRegisterFormUnitTest(TestCase):
 
     @parameterized.expand(
         [
-            ('username', 'Required. 150 characters or less. Letters, numbers and @/./+/-/_ only.'),
+            ('username', 'Required. 150 characters or less. Letters, numbers and @.+-_ only.'),
             ('password', (
                 'The password must have at least one uppercase letter, one '
                 'lowercase letter, one number and at least 8 characters.'
@@ -81,4 +81,21 @@ class AuthorRegisterFormIntegrationTest(TestCase):
         self.form_data[field] = ''
         url = reverse('authors:create')
         response = self.client.post(url, self.form_data, follow=True)
+        self.assertIn(msg, response.content.decode('utf-8'))
         self.assertIn(msg, response.context['form'].errors.get(field))
+
+    def test_username_field_min_length_is_4(self):
+        self.form_data['username'] = 'Use'
+        url = reverse('authors:create')
+        response = self.client.post(url, self.form_data, follow=True)
+        msg = 'The username must have at least 4 characters.'
+        self.assertIn(msg, response.content.decode('utf-8'))
+        self.assertIn(msg, response.context['form'].errors.get('username'))
+
+    def test_username_field_max_length_is_150(self):
+        self.form_data['username'] = 'User' * 50
+        url = reverse('authors:create')
+        response = self.client.post(url, self.form_data, follow=True)
+        msg = 'The user must have a maximum of 4 characters.'
+        self.assertIn(msg, response.content.decode('utf-8'))
+        self.assertIn(msg, response.context['form'].errors.get('username'))

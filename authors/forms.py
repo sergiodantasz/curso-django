@@ -43,9 +43,12 @@ class RegisterForm(forms.ModelForm):
     username = forms.CharField(
         label='Username',
         error_messages={
-            'required': 'The username cannot be empty.'
+            'required': 'The username cannot be empty.',
+            'min_length': 'The username must have at least 4 characters.',
+            'max_length': 'The user must have a maximum of 4 characters.',
         },
-        help_text='Required. 150 characters or less. Letters, numbers and @/./+/-/_ only.'
+        help_text='Required. 150 characters or less. Letters, numbers and @.+-_ only.',
+        min_length=4, max_length=150
     )
 
     email = forms.EmailField(
