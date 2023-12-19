@@ -1,9 +1,10 @@
 from django.contrib import messages
+from django.contrib.auth import authenticate, login as auth_login
 from django.http import Http404
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
-from authors.forms import RegisterForm
+from authors.forms import LoginForm, RegisterForm
 
 
 def register(request):
@@ -14,7 +15,7 @@ def register(request):
         'authors/pages/register.html',
         {
             'form': form,
-            'form_action': reverse('authors:create'),
+            'form_action': reverse('authors:register_create'),
         }
     )
 
@@ -35,3 +36,35 @@ def register_create(request):
         )
         del(request.session['register_form_data'])
     return redirect('authors:register')
+
+
+def login(request):
+    form = LoginForm()
+    return render(
+        request,
+        'authors/pages/login.html',
+        {
+            'form': form,
+            'form_action': reverse('authors:login_create'),
+        }
+    )
+
+
+def login_create(request):
+    if not request.POST:
+        raise Http404()
+    form = LoginForm(request.POST)
+    login_url = reverse('authors:login')
+    if form.is_valid():
+        authenticated_user = authenticate(
+            username=form.cleaned_data.get('username', ''),
+            password=form.cleaned_data.get('password', ''),
+        )
+        if authenticated_user is not None:
+            messages.success(request, 'Login successfully.')
+            auth_login(request, authenticated_user)
+        else:
+            messages.error(request, 'Username or password is invalid.')
+    else:
+        messages.error(request, 'Username or password is invalid.')
+    return redirect(login_url)
