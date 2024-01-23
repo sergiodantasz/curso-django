@@ -407,6 +407,10 @@ h6 {
   color: var(--color-debug-dark);
 }
 
+.current-user-message {
+  margin: 1rem 0;
+}
+
 .center {
   text-align: center;
 }
