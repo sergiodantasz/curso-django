@@ -1,5 +1,7 @@
 from django.contrib import messages
-from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+from django.contrib.auth import authenticate
+from django.contrib.auth import login as auth_login
+from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.shortcuts import redirect, render
@@ -75,8 +77,20 @@ def login_create(request):
 @login_required(login_url='authors:login', redirect_field_name='next')
 def logout(request):
     if not request.POST:
+        messages.error(
+            request,
+            'Invalid logout request.'
+        )
         return redirect(reverse('authors:login'))
     if request.POST.get('username') != request.user.username:
+        messages.error(
+            request,
+            'Invalid logout user.'
+        )
         return redirect(reverse('authors:login'))
+    messages.success(
+        request,
+        'Logout completed successfully.'
+    )
     auth_logout(request)
     return redirect(reverse('authors:login'))
