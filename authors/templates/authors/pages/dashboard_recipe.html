@@ -1,14 +1,14 @@
 {% extends "global/pages/base.html" %}
 
-{% block "title" %}Login{% endblock "title" %}
+{% block "title" %}Dashboard{% endblock "title" %}
 
 {% block "content" %}
   {% include "global/partials/_messages.html" %}
   <div class="main-content center container">
-    <h1>Login</h1>
+    <h1>Dashboard</h1>
     {% include "authors/partials/_current_user.html" %}
+    <div class="left">
+      {% include "global/partials/_form.html" %}
+    </div>
   </div>
-  {% if not user.is_authenticated %}
-    {% include "global/partials/_form.html" %}
-  {% endif %}
 {% endblock "content" %}

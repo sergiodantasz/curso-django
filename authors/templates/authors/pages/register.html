@@ -3,9 +3,9 @@
 {% block "title" %}Register{% endblock "title" %}
 
 {% block "content" %}
+{% include "global/partials/_messages.html" %}
   <div class="main-content center container">
     <h1>Register</h1>
   </div>
-  {% include "global/partials/_messages.html" %}
   {% include "global/partials/_form.html" %}
 {% endblock "content" %}
