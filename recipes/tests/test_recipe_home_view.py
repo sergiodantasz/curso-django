@@ -9,7 +9,7 @@ from recipes.tests.test_recipe_base import RecipeTestBase
 class RecipeHomeViewTest(RecipeTestBase):
     def test_recipe_home_view_function_is_correct(self):
         view = resolve(reverse('recipes:home'))
-        self.assertIs(view.func, views.home)
+        self.assertIs(view.func.view_class, views.RecipeListViewHome)
 
     def test_recipe_home_view_returns_200(self):
         response = self.client.get(reverse('recipes:home'))
