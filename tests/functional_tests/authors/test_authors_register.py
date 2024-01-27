@@ -14,10 +14,7 @@ class AuthorsRegisterTest(AuthorsBaseTest):
                 field.send_keys(' ' * 20)
 
     def get_form(self):
-        return self.browser.find_element(
-            By.XPATH,
-            '/html/body/main/div[2]/form'
-        )
+        return self.browser.find_element(By.XPATH, '/html/body/main/div[2]/form')
 
     def form_field_test_with_callback(self, callback):
         self.browser.get(self.live_server_url + '/authors/register/')
@@ -34,6 +31,7 @@ class AuthorsRegisterTest(AuthorsBaseTest):
             first_name_field.send_keys(Keys.ENTER)
             form = self.get_form()
             self.assertIn('The first name cannot be empty.', form.text)
+
         self.form_field_test_with_callback(callback)
 
     def test_empty_last_name_error_message(self):
@@ -43,6 +41,7 @@ class AuthorsRegisterTest(AuthorsBaseTest):
             last_name_field.send_keys(Keys.ENTER)
             form = self.get_form()
             self.assertIn('The last name cannot be empty.', form.text)
+
         self.form_field_test_with_callback(callback)
 
     def test_empty_username_error_message(self):
@@ -52,6 +51,7 @@ class AuthorsRegisterTest(AuthorsBaseTest):
             username_field.send_keys(Keys.ENTER)
             form = self.get_form()
             self.assertIn('The username cannot be empty.', form.text)
+
         self.form_field_test_with_callback(callback)
 
     def test_passwords_do_not_match(self):
@@ -63,6 +63,7 @@ class AuthorsRegisterTest(AuthorsBaseTest):
             password2.send_keys(Keys.ENTER)
             form = self.get_form()
             self.assertIn('The passwords do not match.', form.text)
+
         self.form_field_test_with_callback(callback)
 
     def test_user_valid_data_register_successfully(self):
@@ -71,11 +72,15 @@ class AuthorsRegisterTest(AuthorsBaseTest):
         self.get_by_placeholder(form, 'Ex.: David').send_keys('First Name')
         self.get_by_placeholder(form, 'Ex.: Anton').send_keys('Last Name')
         self.get_by_placeholder(form, 'Ex.: DavidAnton_123').send_keys('my_username')
-        self.get_by_placeholder(form, 'Ex.: davidanton@email.com').send_keys('email@valid.com')
+        self.get_by_placeholder(form, 'Ex.: davidanton@email.com').send_keys(
+            'email@valid.com'
+        )
         self.get_by_placeholder(form, 'Type your password here.').send_keys('P@ssw0rd1')
-        self.get_by_placeholder(form, 'Re-enter your password here.').send_keys('P@ssw0rd1')
+        self.get_by_placeholder(form, 'Re-enter your password here.').send_keys(
+            'P@ssw0rd1'
+        )
         form.submit()
         self.assertIn(
             'Your user has been created successfully, please log in.',
-            self.browser.find_element(By.TAG_NAME, 'body').text
+            self.browser.find_element(By.TAG_NAME, 'body').text,
         )

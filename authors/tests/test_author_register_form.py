@@ -13,7 +13,7 @@ class AuthorRegisterFormUnitTest(TestCase):
             ('username', 'Ex.: DavidAnton_123'),
             ('email', 'Ex.: davidanton@email.com'),
             ('password', 'Type your password here.'),
-            ('password2', 'Re-enter your password here.')
+            ('password2', 'Re-enter your password here.'),
         ]
     )
     def test_fields_placeholder_is_correct(self, field, placeholder):
@@ -23,15 +23,24 @@ class AuthorRegisterFormUnitTest(TestCase):
 
     @parameterized.expand(
         [
-            ('username', 'Required. 150 characters or less. Letters, numbers and @.+-_ only.'),
-            ('password', (
-                'The password must have at least one uppercase letter, one '
-                'lowercase letter, one number and at least 8 characters.'
-            )),
-            ('password2', (
-                'The password must have at least one uppercase letter, one '
-                'lowercase letter, one number and at least 8 characters.'
-            ))
+            (
+                'username',
+                'Required. 150 characters or less. Letters, numbers and @.+-_ only.',
+            ),
+            (
+                'password',
+                (
+                    'The password must have at least one uppercase letter, one '
+                    'lowercase letter, one number and at least 8 characters.'
+                ),
+            ),
+            (
+                'password2',
+                (
+                    'The password must have at least one uppercase letter, one '
+                    'lowercase letter, one number and at least 8 characters.'
+                ),
+            ),
         ]
     )
     def test_fields_help_text_is_correct(self, field, help_text):
@@ -46,7 +55,7 @@ class AuthorRegisterFormUnitTest(TestCase):
             ('username', 'Username'),
             ('email', 'E-mail'),
             ('password', 'Password'),
-            ('password2', 'Re-enter password')
+            ('password2', 'Re-enter password'),
         ]
     )
     def test_fields_label_is_correct(self, field, label):
@@ -74,7 +83,7 @@ class AuthorRegisterFormIntegrationTest(TestCase):
             ('first_name', 'The first name cannot be empty.'),
             ('last_name', 'The last name cannot be empty.'),
             ('password', 'The password cannot be empty.'),
-            ('password2', 'Please, re-enter the password.')
+            ('password2', 'Please, re-enter the password.'),
         ]
     )
     def test_fields_cannot_be_empty(self, field, msg):
@@ -138,11 +147,13 @@ class AuthorRegisterFormIntegrationTest(TestCase):
 
     def test_author_created_can_login(self):
         url = reverse('authors:register_create')
-        self.form_data.update({
-            'username': 'testuser',
-            'password': '@Bc123456',
-            'password2': '@Bc123456',
-        })
+        self.form_data.update(
+            {
+                'username': 'testuser',
+                'password': '@Bc123456',
+                'password2': '@Bc123456',
+            }
+        )
         self.client.post(url, data=self.form_data, follow=True)
         is_authenticated = self.client.login(
             username='testuser',

@@ -2,7 +2,6 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from pytest import mark
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 
 from tests.functional_tests.authors.base import AuthorsBaseTest
 
@@ -21,15 +20,12 @@ class AuthorsLoginTest(AuthorsBaseTest):
         form.submit()
         self.assertIn(
             f'You are logged in as {user.username}.',
-            self.browser.find_element(By.TAG_NAME, 'body').text
+            self.browser.find_element(By.TAG_NAME, 'body').text,
         )
 
     def test_login_create_raises_404_if_not_POST_method(self):
         self.browser.get(self.live_server_url + reverse('authors:login_create'))
-        self.assertIn(
-            'Not Found',
-            self.browser.find_element(By.TAG_NAME, 'body').text
-        )
+        self.assertIn('Not Found', self.browser.find_element(By.TAG_NAME, 'body').text)
 
     def test_login_form_is_invalid(self):
         self.browser.get(self.live_server_url + reverse('authors:login'))
@@ -41,7 +37,7 @@ class AuthorsLoginTest(AuthorsBaseTest):
         form.submit()
         self.assertIn(
             'Username or password is invalid.',
-            self.browser.find_element(By.TAG_NAME, 'body').text
+            self.browser.find_element(By.TAG_NAME, 'body').text,
         )
 
     def test_form_login_invalid_credentials(self):
@@ -54,5 +50,5 @@ class AuthorsLoginTest(AuthorsBaseTest):
         form.submit()
         self.assertIn(
             'Username or password is invalid.',
-            self.browser.find_element(By.TAG_NAME, 'body').text
+            self.browser.find_element(By.TAG_NAME, 'body').text,
         )

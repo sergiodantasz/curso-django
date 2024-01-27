@@ -18,5 +18,5 @@ def is_strong_password(password):
         raise ValidationError(
             'The password must have at least one uppercase letter, '
             'one lowercase letter, one number and at least 8 characters.',
-            'invalid'
+            'invalid',
         )

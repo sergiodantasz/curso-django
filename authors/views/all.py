@@ -4,10 +4,10 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import redirect, render
 from django.urls import reverse
 
-from authors.forms import AuthorRecipeForm, LoginForm, RegisterForm
+from authors.forms import LoginForm, RegisterForm
 from recipes.models import Recipe
 
 
@@ -20,7 +20,7 @@ def register(request):
         {
             'form': form,
             'form_action': reverse('authors:register_create'),
-        }
+        },
     )
 
 
@@ -35,10 +35,9 @@ def register_create(request):
         user.set_password(user.password)
         user.save()
         messages.success(
-            request,
-            'Your user has been created successfully, please log in.'
+            request, 'Your user has been created successfully, please log in.'
         )
-        del(request.session['register_form_data'])
+        del request.session['register_form_data']
         return redirect(reverse('authors:login'))
     return redirect('authors:register')
 
@@ -51,7 +50,7 @@ def login(request):
         {
             'form': form,
             'form_action': reverse('authors:login_create'),
-        }
+        },
     )
 
 
@@ -77,35 +76,17 @@ def login_create(request):
 @login_required(login_url='authors:login', redirect_field_name='next')
 def logout(request):
     if not request.POST:
-        messages.error(
-            request,
-            'Invalid logout request.'
-        )
+        messages.error(request, 'Invalid logout request.')
         return redirect(reverse('authors:login'))
     if request.POST.get('username') != request.user.username:
-        messages.error(
-            request,
-            'Invalid logout user.'
-        )
+        messages.error(request, 'Invalid logout user.')
         return redirect(reverse('authors:login'))
-    messages.success(
-        request,
-        'Logout completed successfully.'
-    )
+    messages.success(request, 'Logout completed successfully.')
     auth_logout(request)
     return redirect(reverse('authors:login'))
 
 
 @login_required(login_url='authors:login', redirect_field_name='next')
 def dashboard(request):
-    recipes = Recipe.objects.filter(
-        is_published=False,
-        author=request.user
-    )
-    return render(
-        request,
-        'authors/pages/dashboard.html',
-        {
-            'recipes': recipes
-        }
-    )
+    recipes = Recipe.objects.filter(is_published=False, author=request.user)
+    return render(request, 'authors/pages/dashboard.html', {'recipes': recipes})

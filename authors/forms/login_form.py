@@ -10,6 +10,4 @@ class LoginForm(forms.Form):
         add_placeholder(self.fields['password'], 'Type your password.')
 
     username = forms.CharField()
-    password = forms.CharField(
-        widget=forms.PasswordInput()
-    )
+    password = forms.CharField(widget=forms.PasswordInput())

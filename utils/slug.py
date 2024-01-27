@@ -5,9 +5,7 @@ from django.utils.text import slugify
 
 
 def generate_random_characters(k: int = 5):
-    return ''.join(
-        SystemRandom().choices(ascii_letters + digits, k=k)
-    )
+    return ''.join(SystemRandom().choices(ascii_letters + digits, k=k))
 
 
 def generate_slug(string: str, k: int = 5):

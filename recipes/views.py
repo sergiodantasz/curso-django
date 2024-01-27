@@ -2,7 +2,6 @@ from os import getenv
 
 from django.db.models import Q
 from django.http import Http404
-from django.shortcuts import get_list_or_404, get_object_or_404, render
 from django.views.generic import DetailView, ListView
 
 from recipes import models
@@ -23,7 +22,9 @@ class RecipeListViewBase(ListView):
 
     def get_context_data(self, *args, **kwargs):
         ctx = super().get_context_data(*args, **kwargs)
-        page_obj, pagination_range = make_pagination(self.request, ctx.get('recipes'), PER_PAGE)
+        page_obj, pagination_range = make_pagination(
+            self.request, ctx.get('recipes'), PER_PAGE
+        )
         ctx.update(
             {
                 'recipes': page_obj,
@@ -49,11 +50,7 @@ class RecipeListViewCategory(RecipeListViewBase):
 
     def get_context_data(self, *args, **kwargs):
         ctx = super().get_context_data(*args, **kwargs)
-        ctx.update(
-            {
-                'title': f'{self.get_queryset()[0].category.name} | Category'
-            }
-        )
+        ctx.update({'title': f'{self.get_queryset()[0].category.name} | Category'})
         return ctx
 
 
@@ -66,10 +63,7 @@ class RecipeListViewSearch(RecipeListViewBase):
         if not search_term:
             raise Http404()
         qs = qs.filter(
-            Q(
-                Q(title__icontains=search_term) |
-                Q(description__icontains=search_term)
-            ),
+            Q(Q(title__icontains=search_term) | Q(description__icontains=search_term)),
         )
         return qs
 
@@ -98,9 +92,5 @@ class RecipeDetail(DetailView):
 
     def get_context_data(self, *args, **kwargs):
         ctx = super().get_context_data(*args, **kwargs)
-        ctx.update(
-            {
-                'is_detail_page': True
-            }
-        )
+        ctx.update({'is_detail_page': True})
         return ctx

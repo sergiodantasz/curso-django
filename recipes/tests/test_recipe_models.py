@@ -10,7 +10,7 @@ class RecipeRecipeModelTest(RecipeTestBase):
     def setUp(self) -> None:
         self.recipe = self.create_recipe()
         return super().setUp()
-    
+
     def create_recipe_without_defaults(self):
         recipe = models.Recipe(
             category=self.create_category('Test Default Category'),
@@ -19,7 +19,7 @@ class RecipeRecipeModelTest(RecipeTestBase):
                 first_name='UserFirstName',
                 last_name='UserLastName',
                 email='usertest@django.com',
-                password='999'
+                password='999',
             ),
             title='Recipe Title',
             description='Recipe Description',

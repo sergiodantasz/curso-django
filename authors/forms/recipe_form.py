@@ -18,15 +18,17 @@ class AuthorRecipeForm(forms.ModelForm):
     class Meta:
         model = Recipe
         fields = (
-            'title', 'description', 'preparation_time', 'preparation_time_unit',
-            'preparation_steps', 'servings', 'servings_unit', 'cover'
+            'title',
+            'description',
+            'preparation_time',
+            'preparation_time_unit',
+            'preparation_steps',
+            'servings',
+            'servings_unit',
+            'cover',
         )
         widgets = {
-            'cover': forms.FileInput(
-                attrs={
-                    'class': 'span-2'
-                }
-            ),
+            'cover': forms.FileInput(attrs={'class': 'span-2'}),
             'servings_unit': forms.Select(
                 choices=(
                     ('Porcões', 'Porções'),
@@ -39,7 +41,7 @@ class AuthorRecipeForm(forms.ModelForm):
                     ('Minutos', 'Minutos'),
                     ('Horas', 'Horas'),
                 )
-            )
+            ),
         }
 
     def clean(self):
@@ -48,7 +50,9 @@ class AuthorRecipeForm(forms.ModelForm):
         title = cleaned_data.get('title')
         description = cleaned_data.get('description')
         if title == description:
-            self._form_errors['description'].append('The title and description must be different.')
+            self._form_errors['description'].append(
+                'The title and description must be different.'
+            )
         if self._form_errors:
             raise ValidationError(self._form_errors)
         return clean_
@@ -57,19 +61,25 @@ class AuthorRecipeForm(forms.ModelForm):
         field_name = 'title'
         field_value = self.cleaned_data.get(field_name)
         if len(field_value) < 5:
-            self._form_errors[field_name].append('The title must have at least 5 characters.')
+            self._form_errors[field_name].append(
+                'The title must have at least 5 characters.'
+            )
         return field_value
 
     def clean_preparation_time(self):
         field_name = 'preparation_time'
         field_value = self.cleaned_data.get(field_name)
         if not is_non_negative_number(field_value):
-            self._form_errors[field_name].append('The preparation time must be a non-negative number.')
+            self._form_errors[field_name].append(
+                'The preparation time must be a non-negative number.'
+            )
         return field_value
 
     def clean_servings(self):
         field_name = 'servings'
         field_value = self.cleaned_data.get(field_name)
         if not is_non_negative_number(field_value):
-            self._form_errors[field_name].append('The servings must be a non-negative number.')
+            self._form_errors[field_name].append(
+                'The servings must be a non-negative number.'
+            )
         return field_value

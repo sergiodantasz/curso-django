@@ -14,14 +14,14 @@ class RecipeMixin:
         last_name: str = 'UserLastName',
         username: str = 'username',
         email: str = 'username@django.com',
-        password: str = '123'
+        password: str = '123',
     ):
         return models.User.objects.create_user(
             first_name=first_name,
             last_name=last_name,
             username=username,
             password=password,
-            email=email
+            email=email,
         )
 
     def create_recipe(
@@ -37,7 +37,7 @@ class RecipeMixin:
         servings_unit: str = 'portions',
         preparation_steps: str = 'Recipe Preparation Steps',
         preparation_steps_is_html: bool = False,
-        is_published: bool = True
+        is_published: bool = True,
     ):
         if category_data is None:
             category_data = {}
@@ -55,7 +55,7 @@ class RecipeMixin:
             servings_unit=servings_unit,
             preparation_steps=preparation_steps,
             preparation_steps_is_html=preparation_steps_is_html,
-            is_published=is_published
+            is_published=is_published,
         )
 
     def create_recipe_in_batch(self, qty=10):
@@ -64,9 +64,7 @@ class RecipeMixin:
             kwargs = {
                 'title': f'Recipe Title {i}',
                 'slug': f'r{i}',
-                'author_data': {
-                    'username': f'u{i}'
-                }
+                'author_data': {'username': f'u{i}'},
             }
             recipe = self.create_recipe(**kwargs)
             recipes.append(recipe)

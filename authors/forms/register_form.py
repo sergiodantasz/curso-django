@@ -17,9 +17,7 @@ class RegisterForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = [
-            'username', 'first_name', 'last_name', 'email', 'password'
-        ]
+        fields = ['username', 'first_name', 'last_name', 'email', 'password']
 
     username = forms.CharField(
         label='Username',
@@ -29,63 +27,49 @@ class RegisterForm(forms.ModelForm):
             'max_length': 'The user must have a maximum of 4 characters.',
         },
         help_text='Required. 150 characters or less. Letters, numbers and @.+-_ only.',
-        min_length=4, max_length=150
+        min_length=4,
+        max_length=150,
     )
 
     email = forms.EmailField(
-        label='E-mail',
-        error_messages={
-            'required': 'The e-mail cannot be empty.'
-        }
+        label='E-mail', error_messages={'required': 'The e-mail cannot be empty.'}
     )
 
     first_name = forms.CharField(
         label='First name',
-        error_messages={
-            'required': 'The first name cannot be empty.'
-        }
+        error_messages={'required': 'The first name cannot be empty.'},
     )
 
     last_name = forms.CharField(
-        label='Last name',
-        error_messages={
-            'required': 'The last name cannot be empty.'
-        }
+        label='Last name', error_messages={'required': 'The last name cannot be empty.'}
     )
 
     password = forms.CharField(
         label='Password',
         widget=forms.PasswordInput(),
-        error_messages={
-            'required': 'The password cannot be empty.'
-        },
+        error_messages={'required': 'The password cannot be empty.'},
         help_text=(
             'The password must have at least one uppercase letter, one '
             'lowercase letter, one number and at least 8 characters.'
         ),
-        validators=[is_strong_password]
+        validators=[is_strong_password],
     )
 
     password2 = forms.CharField(
         label='Re-enter password',
         widget=forms.PasswordInput(),
-        error_messages={
-            'required': 'Please, re-enter the password.'
-        },
+        error_messages={'required': 'Please, re-enter the password.'},
         help_text=(
             'The password must have at least one uppercase letter, one '
             'lowercase letter, one number and at least 8 characters.'
-        )
+        ),
     )
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
         exists = User.objects.filter(email=email).exists()
         if exists:
-            raise ValidationError(
-                'This email is already in use.',
-                'invalid'
-            )
+            raise ValidationError('This email is already in use.', 'invalid')
         return email
 
     def clean(self):
@@ -93,10 +77,7 @@ class RegisterForm(forms.ModelForm):
         password = cleaned_data.get('password')
         password2 = cleaned_data.get('password2')
         if password2 != password:
-            raise ValidationError({
-                'password2': ValidationError(
-                    'The passwords do not match.',
-                    'invalid'
-                )
-            })
+            raise ValidationError(
+                {'password2': ValidationError('The passwords do not match.', 'invalid')}
+            )
         return cleaned_data
