@@ -32,7 +32,7 @@ SECRET_KEY = getenv('SECRET_KEY', 'INSECURE')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(int(getenv('DEBUG', 0)))
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [host for host in getenv('ALLOWED_HOSTS', '').split()]
 
 
 # Application definition
