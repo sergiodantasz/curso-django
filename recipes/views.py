@@ -1,10 +1,8 @@
 from os import getenv
-from reprlib import recursive_repr
 
 from django.db.models import Q
 from django.forms.models import model_to_dict
 from django.http import Http404, JsonResponse
-from django.http.response import HttpResponse as HttpResponse
 from django.views.generic import DetailView, ListView
 
 from recipes import models
@@ -21,6 +19,7 @@ class RecipeListViewBase(ListView):
     def get_queryset(self):
         qs = super().get_queryset()
         qs = qs.filter(is_published=True)
+        qs = qs.select_related('author', 'category')
         return qs
 
     def get_context_data(self, *args, **kwargs):
