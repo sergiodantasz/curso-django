@@ -56,7 +56,7 @@ class Recipe(models.Model):
         Category, on_delete=models.SET_NULL, blank=True, default=None, null=True
     )
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    tags = models.ManyToManyField(Tag)
+    tags = models.ManyToManyField(Tag, blank=True, default='')
 
     def __str__(self):
         return self.title
