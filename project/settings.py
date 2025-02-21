@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'tag',
     # Debug Toolbar
     'debug_toolbar',
+    # API
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
