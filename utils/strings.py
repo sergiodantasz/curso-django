@@ -1,6 +1,6 @@
 def is_non_negative_number(string: str) -> bool:
     try:
         number = float(string)
-    except ValueError:
-        raise ValueError('The string must have the format of a number.')
+    except (ValueError, TypeError):
+        return False
     return number >= 0

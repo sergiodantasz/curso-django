@@ -1,4 +1,6 @@
 import os
+import string
+from random import SystemRandom
 
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -7,6 +9,7 @@ from django.db.models import F, Value
 from django.db.models.functions import Concat
 from django.forms import ValidationError
 from django.urls import reverse
+from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 from PIL import Image
 
@@ -94,15 +97,14 @@ class Recipe(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            slug = generate_dynamic_slug(self, 'title')
-            self.slug = slug
-        saved = super().save(*args, **kwargs)
-        if self.cover:
-            try:
-                self.resize_image(self.cover, 840)
-            except FileNotFoundError:
-                ...
-        return saved
+            rand_letters = ''.join(
+                SystemRandom().choices(
+                    string.ascii_letters + string.digits,
+                    k=5,
+                )
+            )
+            self.slug = slugify(f'{self.title}-{rand_letters}')
+        return super().save(*args, **kwargs)
 
     def clean(self, *args, **kwargs):
         error_messages = {}
