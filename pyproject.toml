@@ -5,12 +5,14 @@ description = ""
 authors = ["Sérgio Dantas <sergiodnts828@gmail.com>"]
 license = "MIT"
 readme = "README.md"
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.10"
 Django = "~4.2.7"
 Pillow = "~10.1.0"
 python-dotenv = "1.0.0"
+pytest-dotenv = "^0.5.2"
 
 [tool.poetry.group.dev.dependencies]
 Faker = "~20.1.0"

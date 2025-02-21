@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+
 from os import getenv
 from pathlib import Path
 
@@ -46,6 +47,7 @@ INSTALLED_APPS = [
     # Apps
     'recipes',
     'authors',
+    'tag',
     # Debug Toolbar
     'debug_toolbar',
 ]
