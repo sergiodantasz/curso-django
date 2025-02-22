@@ -15,7 +15,7 @@ from tag.models import Tag
 
 
 class RecipeAPIv2ListPagination(PageNumberPagination):
-    page_size = 5
+    page_size = 3
 
 
 class RecipeAPIv2ViewSet(ModelViewSet):
@@ -53,8 +53,6 @@ class RecipeAPIv2ViewSet(ModelViewSet):
         )
 
     def list(self, request, *args, **kwargs):
-        print('REQUEST', request.user)
-        print(request.user.is_authenticated)
         return super().list(request, *args, **kwargs)
 
     def partial_update(self, request, *args, **kwargs):
